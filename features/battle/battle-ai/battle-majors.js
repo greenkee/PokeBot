@@ -22,11 +22,9 @@ module.exports = {
 	},
 
 	turn: function (args, kwargs) {
-		console.log("BEGIN DECISION\n");
 		this.turn = parseInt(args[1]) || 0;
 		this.checkTimer();
 		this.makeDecision();
-		console.log("END DECISION\n");
 	},
 
 	tier: function (args, kwargs) {
@@ -69,9 +67,10 @@ module.exports = {
 
 	inactive: function (args, kwargs) {
 		this.timer = true;
-		if (args[1]) {
-			if (args[1].indexOf("Battle timer is now ON") === 0 || args[1].indexOf("You have") === 0 || args[1].indexOf(Bot.status.nickName) >= 0) this.makeDecision();
-		}
+		// if (args[1]) {
+		// 	if (args[1].indexOf("Battle timer is now ON") === 0 || args[1].indexOf("You have") === 0 || args[1].indexOf(Bot.status.nickName) >= 0) this.makeDecision();
+		// }
+		this.makeDecision();
 	},
 
 	inactiveoff: function (args, kwargs) {

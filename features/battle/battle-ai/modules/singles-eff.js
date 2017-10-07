@@ -694,9 +694,7 @@ exports.decide = function (battle, decisions) {
 	// console.log(decisions);
 	if (battle.gametype !== "singles") throw new Error("This module only works for singles gametype");
 	if (battle.request.forceSwitch) {
-		console.log("WE ARE SWITCHING", decisions);
 		var swi = getBestSwitch(battle, decisions);
-		console.log("HELLO", swi);
 		return swi;
 	} else if (battle.request.active) {
 		var des = decisions[Math.floor(Math.random() * decisions.length)];

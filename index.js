@@ -94,7 +94,7 @@ global.Features = {};
 
 if (!AppOptions.testmode) {
 	var featureList = fs.readdirSync('./features/');
-
+	// var featureList = ["autoinvite", "battle"];
 	featureList.forEach(function (feature) {
 		if (fs.existsSync('./features/' + feature + '/index.js')) {
 			try {
