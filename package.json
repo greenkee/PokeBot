@@ -43,8 +43,9 @@
   "private": true,
   "license": "MIT",
   "dependencies": {
-    "sugar": "1.4.1",
     "colors": "1.0.3",
+    "python-shell": "^0.4.0",
+    "sugar": "1.4.1",
     "websocket": "1.0.18"
   },
   "devDependencies": {
