@@ -690,7 +690,9 @@ var getBestSwitch = exports.getBestSwitch = function (battle, decisions) {
 */
 
 exports.decide = function (battle, decisions) {
-	// console.log(battle);
+	console.log("HELLO !~~~~~~~~~~~~~~~~~~~~ \n");
+	// console.log(battle.self.active);
+	// console.log(battle.foe.active);
 	// console.log(decisions);
 	if (battle.gametype !== "singles") throw new Error("This module only works for singles gametype");
 	if (battle.request.forceSwitch) {
