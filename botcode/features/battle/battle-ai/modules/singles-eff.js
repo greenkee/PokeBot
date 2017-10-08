@@ -2,12 +2,16 @@
  * Default module for singles
  *
  */
+var counter = 0;
 
 exports.id = "singles-eff";
 
 var TypeChart = require('./../typechart.js');
 var Calc = require('./../calc.js');
 var Data = require('./../battle-data.js');
+
+// my_stuff
+var Interop = require('./../../../../interop.js');
 
 var Pokemon = Calc.Pokemon;
 var Conditions = Calc.Conditions;
@@ -690,18 +694,42 @@ var getBestSwitch = exports.getBestSwitch = function (battle, decisions) {
 */
 
 exports.decide = function (battle, decisions) {
+<<<<<<< HEAD:botcode/features/battle/battle-ai/modules/singles-eff.js
 	console.log("HELLO !~~~~~~~~~~~~~~~~~~~~ \n");
 	// console.log(battle.self.active);
 	// console.log(battle.foe.active);
 	// console.log(decisions);
+=======
+>>>>>>> 70c9eb63aff5f9659cd6ce507402e0fea42532e7:features/battle/battle-ai/modules/singles-eff.js
 	if (battle.gametype !== "singles") throw new Error("This module only works for singles gametype");
 	if (battle.request.forceSwitch) {
 		var swi = getBestSwitch(battle, decisions);
 		return swi;
 	} else if (battle.request.active) {
+
+		console.log("Counter:", counter);
+		var pika = {
+			type: "electric",
+		 	depression: true,
+			lmao: counter
+		}
+
+		console.log("pike lmao", pika.lmao);
+
+		var res = "bad";
+
+		Interop.compute(pika);
+		console.log("computed");
+		res = Interop.getres();
+		console.log("got res");
+
+		console.log("RES:", res);
+
+
 		var des = decisions[Math.floor(Math.random() * decisions.length)];
 		// var a = getBestMove(battle, decisions);
 		// console.log("HELLO", des);
+		counter += 1;
 		return des;
 	} else {
 		return decisions[Math.floor(Math.random() * decisions.length)];
