@@ -694,6 +694,13 @@ var getBestSwitch = exports.getBestSwitch = function (battle, decisions) {
 */
 
 exports.decide = function (battle, decisions) {
+<<<<<<< HEAD:botcode/features/battle/battle-ai/modules/singles-eff.js
+	console.log("HELLO !~~~~~~~~~~~~~~~~~~~~ \n");
+	// console.log(battle.self.active);
+	// console.log(battle.foe.active);
+	// console.log(decisions);
+=======
+>>>>>>> 70c9eb63aff5f9659cd6ce507402e0fea42532e7:features/battle/battle-ai/modules/singles-eff.js
 	if (battle.gametype !== "singles") throw new Error("This module only works for singles gametype");
 	if (battle.request.forceSwitch) {
 		var swi = getBestSwitch(battle, decisions);
