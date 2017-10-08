@@ -1,9 +1,16 @@
 import json, sys, numpy as np
 
-for line in sys.stdin:
-    # turn string input into JSON dict
-    tmp = json.loads(line)
+#Read data from stdin
+def read_in():
+    lines = sys.stdin.readlines()
+    #Since our input would only be having one line, parse our JSON data from that
+    return json.loads(lines[0])
 
-print("test")
-print(tmp['type'])
-print(json.dumps(["hello", "world"]))
+def main():
+    #get our data as an array from read_in()
+    for line in sys.stdin:
+        print(json.loads(line)['lmao'])
+
+#start process
+if __name__ == '__main__':
+    main()
