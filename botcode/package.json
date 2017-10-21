@@ -45,8 +45,12 @@
   "dependencies": {
     "colors": "1.0.3",
     "python-shell": "^0.4.0",
+    "serialport": "^6.0.0",
     "sugar": "1.4.1",
-    "websocket": "1.0.18"
+    "wait.for-es6": "^0.1.0",
+    "websocket": "1.0.18",
+    "zerorpc": "^0.9.7",
+    "zmq": "^2.15.3"
   },
   "devDependencies": {
     "cache-swap": "~0.2.0",

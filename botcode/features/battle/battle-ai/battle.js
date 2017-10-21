@@ -16,9 +16,25 @@ var battleData = require("./battle-data.js");
 var Player = battleData.Player;
 
 var Calc = require('./calc.js');
+var wait=require('wait.for-es6');
+// MY CODE:
+var zerorpc = require("zerorpc");
+
+
+console.log("\n-----------------------------------------------\n".yellow);
 
 var Battle = exports.Battle = (function () {
 	function Battle (id) {
+		// MY CODE:
+		this.client = new zerorpc.Client();
+		this.client.connect("tcp://127.0.0.1:3333");
+		this.client.invoke("hello", "World!", function(error, res, more) {
+		    console.log(res);
+		});
+		this.decision_flag = false;
+		this.net_decision = 0;
+		//END OF MY CODE
+
 		this.id = id;
 		this.title = "";
 		this.players = {
@@ -73,7 +89,7 @@ var Battle = exports.Battle = (function () {
 
 	Battle.prototype.sendDecision = function (decision) {
 		if (!decision || !decision.length) return;
-		debug("Send Decision: ".cyan + JSON.stringify(decision));
+		console.log("Send Decision: ".cyan + JSON.stringify(decision));
 		var str = "/choose ";
 		for (var i = 0; i < decision.length; i++) {
 			switch (decision[i].type) {
@@ -180,7 +196,7 @@ var Battle = exports.Battle = (function () {
 
 	Battle.prototype.makeDecision = function (forced) {
 		if (!this.self) return; // Not playing
-		debug(this.id + "->MakeDecision");
+		console.log(this.id + "->MakeDecision");
 		if (!forced && this.lastSend.rqid >= 0 && this.lastSend.rqid === this.rqid) {
 			if (Date.now() - this.lastSend.time < MIN_TIME_LOCK) return;
 			if (this.lastSend.decision) {
@@ -188,34 +204,45 @@ var Battle = exports.Battle = (function () {
 				return;
 			}
 		}
+
+		console.log("OMG");
+		console.log(this.lock);
 		if (this.lock) return;
 		this.lock = true;
-		debug("Making decisions - " + this.id);
+		console.log("Making decisions - " + this.id);
 		var decisions, mod;
 		try {
 			decisions = decisionMaker.getDecisions(this);
 		} catch (e) {
-			debug(e.stack);
-			debug("Decision maker crashed: " + sys.inspect(e));
+			console.log(e.stack);
+			console.log("Decision maker crashed: " + sys.inspect(e));
 			SecurityLog.log("BATTLE D.M. CRASH: " + e.message + "\n" + e.stack);
 			this.lock = false;
 			return;
 		}
 		if (!decisions || !decisions.length) {
-			debug("Nothing to do: " + this.id);
+			console.log("Nothing to do: " + this.id);
 			this.lock = false;
 			return;
 		}
+
+		//MY CODE
 		try {
 			mod = modules.choose(this);
+			console.log("WAITING");
 			if (mod) {
-				var decision = mod.decide(this, decisions);
-				if (decision instanceof Array) {
-					this.lock = false;
-					this.sendDecision(decision);
-					return;
-				}
+
+				mod.decide(this, decisions, this.client);
+				// console.log(this.net_decision);
+				// if (decision instanceof Array) {
+				// 	this.lock = false;
+				// 	this.sendDecision(decision);
+				// 	return;
+				// }
+				return;
 			}
+		//END OF MY CODE
+		
 		} catch (ex) {
 			debug(ex.stack);
 			debug("Module failed: " + mod.id + " | " + sys.inspect(ex));

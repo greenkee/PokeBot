@@ -11,7 +11,6 @@ var Calc = require('./../calc.js');
 var Data = require('./../battle-data.js');
 
 // my_stuff
-var Interop = require('./../../../../interop.js');
 
 var Pokemon = Calc.Pokemon;
 var Conditions = Calc.Conditions;
@@ -664,6 +663,9 @@ var getBestMove = exports.getBestMove = function (battle, decisions) {
 * Switches
 */
 
+
+//MY CODE
+
 var getBestSwitch = exports.getBestSwitch = function (battle, decisions) {
 	var chosen = null;
 	var tmp, maxi = null;
@@ -693,45 +695,47 @@ var getBestSwitch = exports.getBestSwitch = function (battle, decisions) {
 * Swapper
 */
 
-exports.decide = function (battle, decisions) {
-<<<<<<< HEAD:botcode/features/battle/battle-ai/modules/singles-eff.js
+exports.decide = function (battle, decisions, client) {
 	console.log("HELLO !~~~~~~~~~~~~~~~~~~~~ \n");
 	// console.log(battle.self.active);
 	// console.log(battle.foe.active);
 	// console.log(decisions);
-=======
->>>>>>> 70c9eb63aff5f9659cd6ce507402e0fea42532e7:features/battle/battle-ai/modules/singles-eff.js
 	if (battle.gametype !== "singles") throw new Error("This module only works for singles gametype");
 	if (battle.request.forceSwitch) {
-		var swi = getBestSwitch(battle, decisions);
-		return swi;
+
+		client.invoke("get_val", function(error, ret, more) {
+			console.log("FORCE SWITCH")
+			console.log(ret);
+			battle.net_decision = ret;
+			battle.decision_flag = true;
+			var des = getBestSwitch(battle, decisions);
+
+			console.log(des);
+
+			battle.lock = false;
+			battle.sendDecision(des);
+		});
 	} else if (battle.request.active) {
 
-		console.log("Counter:", counter);
-		var pika = {
-			type: "electric",
-		 	depression: true,
-			lmao: counter
-		}
+		console.log("Battle:", battle.self.active);
+		client.invoke("get_data", battle.self.active, function(error, ret, more) {
+			console.log("ABABaBABB")
+			console.log(ret);
+			battle.net_decision = ret;
+			battle.decision_flag = true;
+			var des = decisions[Math.floor(Math.random() * decisions.length)];
 
-		console.log("pike lmao", pika.lmao);
+			console.log(des);
 
-		var res = "bad";
-
-		Interop.compute(pika);
-		console.log("computed");
-		res = Interop.getres();
-		console.log("got res");
-
-		console.log("RES:", res);
-
+			battle.lock = false;
+			battle.sendDecision(des);
+		});
 
 		var des = decisions[Math.floor(Math.random() * decisions.length)];
-		// var a = getBestMove(battle, decisions);
-		// console.log("HELLO", des);
-		counter += 1;
 		return des;
 	} else {
 		return decisions[Math.floor(Math.random() * decisions.length)];
 	}
 };
+
+// END OF MY CODE

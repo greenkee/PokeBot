@@ -540,6 +540,7 @@ if (!AppOptions.testmode && Config.watchconfig) {
 
 console.log("\n-----------------------------------------------\n".yellow);
 
+
 //Connection
 if (AppOptions.testmode) {
 	ok("Test mode enabled");

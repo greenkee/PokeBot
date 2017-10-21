@@ -1,4 +1,4 @@
-from gym import envs
++-+from gym import envs
 print(envs.registry.all())
 
 import gym

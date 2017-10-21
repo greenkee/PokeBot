@@ -4,6 +4,7 @@
 
 var battleData = require("./battle-data.js");
 var Move = battleData.Move;
+var wait=require('wait.for-es6');
 
 module.exports = {
 	rated: function (args, kwargs) {
@@ -68,7 +69,8 @@ module.exports = {
 	inactive: function (args, kwargs) {
 		this.timer = true;
 		// if (args[1]) {
-		// 	if (args[1].indexOf("Battle timer is now ON") === 0 || args[1].indexOf("You have") === 0 || args[1].indexOf(Bot.status.nickName) >= 0) this.makeDecision();
+		// 	if (args[1].indexOf("Battle timer is now ON") === 0 || args[1].indexOf("You have")
+		// === 0 || args[1].indexOf(Bot.status.nickName) >= 0) this.makeDecision();
 		// }
 		this.makeDecision();
 	},
